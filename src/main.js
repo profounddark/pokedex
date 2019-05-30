@@ -4,6 +4,13 @@ import router from './router'
 
 Vue.config.productionTip = false
 
+import VueLocalStorage from 'vue-ls';
+
+let options = {
+  namespace: 'pokedex_'
+};
+
+Vue.use(VueLocalStorage, options);
 
 
 new Vue({

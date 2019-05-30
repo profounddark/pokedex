@@ -13,7 +13,7 @@
         {{ pokemonentry.entry_number + " - " + pokemonentry.pokemon_species.name }}
       </option>
     </select>
-    <button>View the Pokédex Entry for <span class="pokename">{{ pokemon }}</span></button>
+    <button v-bind:class="{ disabled: !pokemon }">View the Pokédex Entry for <span class="pokename">{{ pokemon }}</span></button>
     
     <error-list v-bind:errorList="errors"></error-list>
 
@@ -50,7 +50,7 @@ export default {
       this.pokedex = null;
       // this.showLoading = true;
 
-      let cacheLabel = 'pokeSearch_dex' + this.dexchoose;
+      let cacheLabel = 'dexSearch' + this.dexchoose;
       let cacheExpiry = 15 * 60 * 1000; // 15 minutes
 
       if (this.$ls.get(cacheLabel)){
@@ -64,7 +64,7 @@ export default {
         .then(response => {
           console.log("Loading the " + response.data.names[2].name + " Region Pokédex!");
           this.$ls.set(cacheLabel, response.data.pokemon_entries, cacheExpiry);
-          console.log("Caching this Pokédex as: " + cacheLabel + this.dexchoose);
+          console.log("Caching this Pokédex as: " + cacheLabel);
           this.pokemon = null; // Reset the pokemon
           this.pokedex = response.data.pokemon_entries;
 
@@ -83,6 +83,11 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
+
+.disabled
+{
+  display: none;
+}
 
 select
 {
