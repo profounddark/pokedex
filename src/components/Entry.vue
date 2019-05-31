@@ -2,7 +2,7 @@
   <div id="app">
     <navigation></navigation>
     <h1 class="pokename"> {{ pokemonData.name }} </h1>
-    <img v-bind:src="pokeimage" class="pokeimage">
+    <a v-bind:src="pokeimage.link"><img v-bind:src="pokeimage.image" class="pokeimage"></a>
     <div>
       <input type="radio" id="normal" name="imagetype" v-bind:value="pokenormal" checked v-model="pokeimage">
       <label for="normal">Normal</label>
@@ -33,8 +33,8 @@ export default {
     if (this.$route.params.pokemonData)
     {
       this.pokemonData = this.$route.params.pokemonData;
-      this.pokenormal = this.pokemonData.sprites.front_default; 
-      this.pokeshiny = this.pokemonData.sprites.front_shiny; 
+      this.pokenormal = { image: "https://img.pokemondb.net/sprites/x-y/normal/" + this.pokemonData.name + ".png", link: "http://pokemondb.net/pokedex/" + this.pokemonData.name};
+      this.pokeshiny = { image: "https://img.pokemondb.net/sprites/x-y/shiny/" + this.pokemonData.name + ".png", link: "http://pokemondb.net/pokedex/" + this.pokemonData.name};
       this.pokeimage = this.pokenormal;
     }
     else
@@ -76,4 +76,12 @@ label
 {
   margin-right: 2rem;
 }
+
+@media only screen and (max-width: 600px) {
+  .pokeimage
+  {  
+    width:90%;
+  }
+}
+
 </style>

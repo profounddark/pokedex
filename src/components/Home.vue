@@ -11,11 +11,11 @@
     </select>
     <select v-model="pokemon" v-if="pokedex && pokedex.length > 0">
       <option disabled value=" ">Please select a Pokémon</option>
-      <option v-for="pokemonentry in pokedex" v-bind:value="pokemonentry.pokemon_species.name">
+      <option v-for="pokemonentry in pokedex" v-bind:value="pokemonentry.pokemon_species">
         {{ pokemonentry.entry_number + " - " + pokemonentry.pokemon_species.name }}
       </option>
     </select>
-    <button v-bind:class="{ disabled: !pokemon }" v-on:click="getPokemonData">View the Pokédex Entry for <span class="pokename">{{ pokemon }}</span></button>
+    <button v-bind:class="{ disabled: !pokemon }" v-on:click="getPokemonData">View the Pokédex Entry for <span class="pokename">{{ pokemon.name }}</span></button>
     <cube-spinner v-if="showLoading"></cube-spinner>
 
     <error-list v-bind:errorList="errors"></error-list>
@@ -87,7 +87,7 @@ export default {
       
       this.showLoading = true;
 
-      let cacheLabel = 'pokeSearch' + this.pokemon;
+      let cacheLabel = 'pokeSearch' + this.pokemon.name;
       let cacheExpiry = 15 * 60 * 1000; // 15 minutes
 
       if (this.$ls.get(cacheLabel)){
@@ -97,7 +97,7 @@ export default {
         this.$router.push({ name: 'entry', params: { pokemonData: this.pokedata } });
       }
       else {
-        axios.get('https://pokeapi.co/api/v2/pokemon/' + this.pokemon)
+        axios.get(this.pokemon.url)
         .then(response => {
           console.log("Loading the " + response.data.name + " Pokédex data!");
           this.$ls.set(cacheLabel, response.data, cacheExpiry);
@@ -141,6 +141,7 @@ select
   text-transform: capitalize;
   font-size: 1rem;
 }
+
 
 .pokename
 {
