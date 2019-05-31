@@ -5,17 +5,17 @@
     <p>Choose a Regional Pokédex:</p>
     <select v-model="dexchoose" v-on:change="getPokedexData" class="mainselect">
       <option disabled value=" ">Please select a Pokédex</option>
-      <option v-for="option in dexoptions" v-bind:value="option.value">
+      <option v-for="option in dexoptions" v-bind:value="option.value" v-bind:key="option.value">
         {{ option.text }}
       </option>
     </select>
     <select v-model="pokemon" v-if="pokedex && pokedex.length > 0">
       <option disabled value=" ">Please select a Pokémon</option>
-      <option v-for="pokemonentry in pokedex" v-bind:value="pokemonentry.pokemon_species">
+      <option v-for="pokemonentry in pokedex" v-bind:value="pokemonentry.pokemon_species" v-bind:key="pokemonentry.pokemon_species.name">
         {{ pokemonentry.entry_number + " - " + pokemonentry.pokemon_species.name }}
       </option>
     </select>
-    <button v-bind:class="{ disabled: !pokemon }" v-on:click="getPokemonData">View the Pokédex Entry for <span class="pokename">{{ pokemon.name }}</span></button>
+    <button v-if="pokemon" v-on:click="getPokemonData">View the Pokédex Entry for <span v-if="pokemon" class="pokename">{{ pokemon.name }}</span></button>
     <cube-spinner v-if="showLoading"></cube-spinner>
 
     <error-list v-bind:errorList="errors"></error-list>
@@ -132,13 +132,23 @@ export default {
   display: none;
 }
 
+p
+{
+  margin: .25rem;
+}
 select
 {
   width: 25rem;
   max-width: 90%;
-  margin: 0 auto;
+  margin: 0.25rem auto;
   display: block;
   text-transform: capitalize;
+  font-size: 1rem;
+}
+
+button
+{
+  margin-top: 0.5rem;
   font-size: 1rem;
 }
 
