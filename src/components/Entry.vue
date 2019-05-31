@@ -2,7 +2,7 @@
   <div id="app">
     <navigation></navigation>
     <h1 class="pokename"> {{ pokemonData.name }} </h1>
-    <a v-bind:src="pokeimage.link"><img v-bind:src="pokeimage.image" class="pokeimage"></a>
+    <a v-bind:href="pokeimage.link"><img v-bind:src="pokeimage.image" class="pokeimage" v-bind:alt="pokemonData.name"></a>
     <div>
       <input type="radio" id="normal" name="imagetype" v-bind:value="pokenormal" checked v-model="pokeimage">
       <label for="normal">Normal</label>
