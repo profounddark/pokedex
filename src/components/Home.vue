@@ -68,7 +68,7 @@ export default {
         this.showLoading = false;
       }
       else {
-        axios.get('http://pokeapi.co/api/v2/pokedex/' + this.dexchoose)
+        axios.get('https://pokeapi.co/api/v2/pokedex/' + this.dexchoose)
         .then(response => {
           console.log("Loading the " + response.data.names[2].name + " Region Pokédex!");
           this.$ls.set(cacheLabel, response.data.pokemon_entries, cacheExpiry);
@@ -97,7 +97,7 @@ export default {
         this.$router.push({ name: 'entry', params: { pokemonData: this.pokedata } });
       }
       else {
-        axios.get('http://pokeapi.co/api/v2/pokemon/' + this.pokemon)
+        axios.get('https://pokeapi.co/api/v2/pokemon/' + this.pokemon)
         .then(response => {
           console.log("Loading the " + response.data.name + " Pokédex data!");
           this.$ls.set(cacheLabel, response.data, cacheExpiry);
