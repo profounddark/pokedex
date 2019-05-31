@@ -1,5 +1,6 @@
 <template>
   <div class="hello">
+    <h1>Welcome to the PokéDex!</h1>
     <p>Choose a Regional Pokédex:</p>
     <select v-model="dexchoose" v-on:change="getPokedexData" class="mainselect">
       <option disabled value=" ">Please select a Pokédex</option>
@@ -13,8 +14,9 @@
         {{ pokemonentry.entry_number + " - " + pokemonentry.pokemon_species.name }}
       </option>
     </select>
-    <button v-bind:class="{ disabled: !pokemon }">View the Pokédex Entry for <span class="pokename">{{ pokemon }}</span></button>
-    
+    <button v-bind:class="{ disabled: !pokemon }" v-on:click="getPokemonData">View the Pokédex Entry for <span class="pokename">{{ pokemon }}</span></button>
+    <cube-spinner v-if="showLoading"></cube-spinner>
+
     <error-list v-bind:errorList="errors"></error-list>
 
   </div>
@@ -23,12 +25,15 @@
 <script>
 
 import axios from 'axios';
-import ErrorList from '@/components/ErrorList';
+import ErrorList from '@/components/ErrorList.vue';
+import CubeSpinner from '@/components/CubeSpinner.vue';
+import Entry from '@/components/Entry.vue';
 
 export default {
   name: 'Home',
     data () {
     return {
+      showLoading: false,
       dexchoose: null,
       pokemon: null,
       dexoptions: [
@@ -42,13 +47,14 @@ export default {
         {text: "Mountain Kalos Region Pokédex", value: 14}
       ],
       pokedex: null,
+      pokedata: null,
       errors: []
     }
   },
   methods: {
     getPokedexData: function () {
       this.pokedex = null;
-      // this.showLoading = true;
+      this.showLoading = true;
 
       let cacheLabel = 'dexSearch' + this.dexchoose;
       let cacheExpiry = 15 * 60 * 1000; // 15 minutes
@@ -67,6 +73,36 @@ export default {
           console.log("Caching this Pokédex as: " + cacheLabel);
           this.pokemon = null; // Reset the pokemon
           this.pokedex = response.data.pokemon_entries;
+          this.showLoading = false;
+
+        })
+        .catch(error => {
+          this.errors.push(error);
+        });
+      }
+    },
+    getPokemonData: function () {
+      
+      this.showLoading = true;
+
+      let cacheLabel = 'pokeSearch' + this.pokemon;
+      let cacheExpiry = 15 * 60 * 1000; // 15 minutes
+
+      if (this.$ls.get(cacheLabel)){
+        console.log('Cached Pokémon data detected.');
+        this.pokedata = this.$ls.get(cacheLabel);
+        this.showLoading = false;
+        this.$router.push({ name: 'entry', params: { pokemonData: this.pokedata } });
+      }
+      else {
+        axios.get('http://pokeapi.co/api/v2/pokemon/' + this.pokemon)
+        .then(response => {
+          console.log("Loading the " + response.data.name + " Pokédex data!");
+          this.$ls.set(cacheLabel, response.data, cacheExpiry);
+          console.log("Caching this Pokédex as: " + cacheLabel);
+          this.pokedata = response.data;
+          this.showLoading = false;
+          this.$router.push({ name: 'entry', params: { pokemonData: this.pokedata } });
 
         })
         .catch(error => {
@@ -76,13 +112,15 @@ export default {
     }
   },
   components: {
-    'error-list': ErrorList
+    'error-list': ErrorList,
+    'cube-spinner': CubeSpinner,
+    'entry': Entry
   }
 }
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
-<style scoped>
+<style>
 
 .disabled
 {
