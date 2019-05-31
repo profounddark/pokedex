@@ -134,11 +134,12 @@ export default {
 
 select
 {
-  width: 20rem;
+  width: 25rem;
   max-width: 90%;
   margin: 0 auto;
   display: block;
   text-transform: capitalize;
+  font-size: 1rem;
 }
 
 .pokename

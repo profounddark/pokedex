@@ -16,18 +16,18 @@ export default {
             links: [
                 {
                     id: 0,
-                    text: 'Home',
+                    text: 'Front',
                     page: '/'
                 },
                 {
                     id: 1,
-                    text: 'Favs',
+                    text: 'Favorites',
                     page: '/'
                 },
                 {
                     id: 2,
                     text: 'About',
-                    page: '/about'
+                    page: '/'
                 }
             ]
         }
