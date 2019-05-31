@@ -1,5 +1,6 @@
 <template>
-  <div class="hello">
+  <div class="selector">
+    <navigation></navigation>
     <h1>Welcome to the PokéDex!</h1>
     <p>Choose a Regional Pokédex:</p>
     <select v-model="dexchoose" v-on:change="getPokedexData" class="mainselect">
@@ -28,6 +29,7 @@ import axios from 'axios';
 import ErrorList from '@/components/ErrorList.vue';
 import CubeSpinner from '@/components/CubeSpinner.vue';
 import Entry from '@/components/Entry.vue';
+import Navigation from '@/components/Navigation.vue';
 
 export default {
   name: 'Home',
@@ -114,13 +116,16 @@ export default {
   components: {
     'error-list': ErrorList,
     'cube-spinner': CubeSpinner,
-    'entry': Entry
+    'entry': Entry,
+    'navigation': Navigation
   }
 }
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style>
+
+
 
 .disabled
 {
@@ -140,9 +145,7 @@ select
 {
   text-transform: capitalize;
 }
-h3 {
-  margin: 40px 0 0;
-}
+
 ul {
   list-style-type: none;
   padding: 0;

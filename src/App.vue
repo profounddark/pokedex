@@ -1,9 +1,5 @@
 <template>
   <div id="app">
-    <nav>
-      <router-link to="/">Go to Home</router-link>
-      <router-link to="/entry">Go to Entry</router-link>
-    </nav>
     <router-view/>
   </div>
 </template>
@@ -19,4 +15,25 @@ export default {
 
 <style>
 
+h1
+{
+  font-size: 2rem;
+}
+
+h2
+{
+  font-size: 1.5rem;
+}
+
+body
+{
+  margin: 0;
+  padding: 0;
+}
+
+div
+{
+  padding: 0;
+  margin: 0;
+}
 </style>

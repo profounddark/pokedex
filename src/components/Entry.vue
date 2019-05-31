@@ -1,15 +1,16 @@
 <template>
   <div id="app">
-    <h1>Welcome to the PokéDex!</h1>
-    <h2 class="pokename"> {{ pokemonData.name }} </h2>
+    <navigation></navigation>
+    <h1 class="pokename"> {{ pokemonData.name }} </h1>
     <img v-bind:src="image" class="pokeimage">
-    
+    <h2>National Pokédex # {{ pokemonData.id }} </h2>
   </div>
 </template>
 
 <script>
 
 import axios from 'axios';
+import Navigation from '@/components/Navigation.vue';
 
 export default {
   name: 'Entry',
@@ -20,11 +21,18 @@ export default {
     }
   },
   created () {
-    this.pokemonData = this.$route.params.pokemonData;
-    this.image = this.pokemonData.sprites.front_default;
+    if (this.$route.params.pokemonData)
+    {
+      this.pokemonData = this.$route.params.pokemonData;
+      this.image = this.pokemonData.sprites.front_default;  
+    }
+    else
+    {
+      this.$router.push('/');
+    }
   },
   components: {
-
+    'navigation': Navigation
   }
 }
 </script>
@@ -39,9 +47,18 @@ export default {
   margin-top: 60px;
 }
 
-
+h1
+{
+  margin: 0;
+}
+h2
+{
+  margin: 0;
+}
 .pokeimage
 {
-  width: 50%;
+  width: 25%;
+  border: solid;
+  border-radius: 10%;
 }
 </style>
