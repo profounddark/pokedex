@@ -132,10 +132,7 @@ export default {
   display: none;
 }
 
-p
-{
-  margin: .25rem;
-}
+
 select
 {
   width: 25rem;

@@ -2,7 +2,9 @@
   <div id="app">
     <navigation></navigation>
     <h1 class="pokename"> {{ pokemonData.name }} </h1>
+    <p>National Pokédex # {{ pokemonData.id }} </p>
     <a v-bind:href="pokeimage.link"><img v-bind:src="pokeimage.image" class="pokeimage" v-bind:alt="pokemonData.name"></a>
+
     <div>
       <input type="radio" id="normal" name="imagetype" v-bind:value="pokenormal" checked v-model="pokeimage">
       <label for="normal">Normal</label>
@@ -10,7 +12,9 @@
       <input type="radio" id="shiny" name="imagetype" v-bind:value="pokeshiny" v-model="pokeimage">
       <label for="shiny">Shiny</label>
     </div>
-    <h2>National Pokédex # {{ pokemonData.id }} </h2>
+    <h2> {{ pokemonData.genera[2].genus }} </h2>
+    
+    
   </div>
 </template>
 
@@ -57,21 +61,17 @@ export default {
   color: #2c3e50;
 }
 
-h1
-{
-  margin: 0;
-}
-h2
-{
-  margin: 0;
-}
+
 .pokeimage
 {
   width: 30%;
   border: solid;
   border-radius: 10%;
 }
-
+input
+{
+  margin-left: 2rem;
+}
 label
 {
   margin-right: 2rem;
