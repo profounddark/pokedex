@@ -20,12 +20,12 @@ export default {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
-  color: #2c3e50;
   width: 30rem;
   margin: 0 auto auto;
   background-color: white;
   border: solid;
   border-color: black;
+  min-height: 100vh;
 }
 
 body

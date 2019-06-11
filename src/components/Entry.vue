@@ -9,10 +9,9 @@
 
     <h2>Pokedéx Entries:</h2>
     <div v-for="pokeflavor in pokemonData.flavor_text_entries" v-if="pokeflavor.language.name=='en'">
-      <button class="collapsible">From: {{ pokeflavor.version.name }}</button>
-      <div class="content">
+      <accordion v-bind:title="pokeflavor.version.name">
         <p> {{ pokeflavor.flavor_text }} </p>
-      </div>
+      </accordion>
     </div>
     
     
@@ -23,6 +22,7 @@
 
 import axios from 'axios';
 import Navigation from '@/components/Navigation.vue';
+import Accordion from '@/components/Accordion.vue';
 
 export default {
   name: 'Entry',
@@ -46,36 +46,14 @@ export default {
     }
   },
   components: {
-    'navigation': Navigation
+    'navigation': Navigation,
+    'accordion': Accordion
   }
 }
 
 </script>
 
 <style>
-
-.collapsible {
-  background-color: #eee;
-  color: #444;
-  cursor: pointer;
-  padding: 18px;
-  width: 100%;
-  border: none;
-  text-align: left;
-  outline: none;
-  font-size: 15px;
-}
-
-.active, .collapsible:hover {
-  background-color: #ccc;
-}
-
-.content {
-  padding: 0 18px;
-  display: none;
-  overflow: hidden;
-  background-color: #f1f1f1;
-}
 
 .pokeimage
 {
