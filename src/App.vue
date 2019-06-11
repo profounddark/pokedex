@@ -15,6 +15,23 @@ export default {
 
 <style>
 
+#app {
+  font-family: 'Avenir', Helvetica, Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-align: center;
+  color: #2c3e50;
+  width: 30rem;
+  margin: 0 auto auto;
+  background-color: white;
+  border: solid;
+  border-color: black;
+}
+
+body
+{
+  background-color: darkgray;
+}
 h1
 {
   margin: 0;
@@ -31,8 +48,9 @@ h2
 
 p
 {
-  margin: 0;
+  margin: .25rem;
   padding: 0;
+  font-size: 1.2rem;
 }
 
 body
@@ -45,5 +63,12 @@ div
 {
   padding: 0;
   margin: 0;
+}
+
+@media only screen and (max-width: 600px) {
+  #app
+  {
+    width: 100%;
+  }
 }
 </style>

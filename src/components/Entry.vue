@@ -1,18 +1,19 @@
 <template>
-  <div id="app">
+  <div>
     <navigation></navigation>
     <h1 class="pokename"> {{ pokemonData.name }} </h1>
     <p>National Pokédex # {{ pokemonData.id }} </p>
     <a v-bind:href="pokeimage.link"><img v-bind:src="pokeimage.image" class="pokeimage" v-bind:alt="pokemonData.name"></a>
 
-    <div>
-      <input type="radio" id="normal" name="imagetype" v-bind:value="pokenormal" checked v-model="pokeimage">
-      <label for="normal">Normal</label>
-    
-      <input type="radio" id="shiny" name="imagetype" v-bind:value="pokeshiny" v-model="pokeimage">
-      <label for="shiny">Shiny</label>
+    <h2 v-for="pokegenus in pokemonData.genera" v-if="pokegenus.language.name=='en'"> {{ pokegenus.genus }} </h2>
+
+    <h2>Pokedéx Entries:</h2>
+    <div v-for="pokeflavor in pokemonData.flavor_text_entries" v-if="pokeflavor.language.name=='en'">
+      <button class="collapsible">From: {{ pokeflavor.version.name }}</button>
+      <div class="content">
+        <p> {{ pokeflavor.flavor_text }} </p>
+      </div>
     </div>
-    <h2> {{ pokemonData.genera[2].genus }} </h2>
     
     
   </div>
@@ -29,8 +30,7 @@ export default {
     return {
       pokemonData: null,
       pokeimage: null,
-      pokenormal: null,
-      pokeshiny: null
+      pokenormal: null
     }
   },
   created () {
@@ -38,7 +38,6 @@ export default {
     {
       this.pokemonData = this.$route.params.pokemonData;
       this.pokenormal = { image: "https://img.pokemondb.net/sprites/x-y/normal/" + this.pokemonData.name + ".png", link: "http://pokemondb.net/pokedex/" + this.pokemonData.name};
-      this.pokeshiny = { image: "https://img.pokemondb.net/sprites/x-y/shiny/" + this.pokemonData.name + ".png", link: "http://pokemondb.net/pokedex/" + this.pokemonData.name};
       this.pokeimage = this.pokenormal;
     }
     else
@@ -50,38 +49,41 @@ export default {
     'navigation': Navigation
   }
 }
+
 </script>
 
 <style>
-#app {
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
+
+.collapsible {
+  background-color: #eee;
+  color: #444;
+  cursor: pointer;
+  padding: 18px;
+  width: 100%;
+  border: none;
+  text-align: left;
+  outline: none;
+  font-size: 15px;
 }
 
+.active, .collapsible:hover {
+  background-color: #ccc;
+}
+
+.content {
+  padding: 0 18px;
+  display: none;
+  overflow: hidden;
+  background-color: #f1f1f1;
+}
 
 .pokeimage
 {
-  width: 30%;
+  width: 95%;
   border: solid;
   border-radius: 10%;
 }
-input
-{
-  margin-left: 2rem;
-}
-label
-{
-  margin-right: 2rem;
-}
 
-@media only screen and (max-width: 600px) {
-  .pokeimage
-  {  
-    width:90%;
-  }
-}
+
 
 </style>

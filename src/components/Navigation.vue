@@ -41,6 +41,7 @@ export default {
         padding: 0.5rem;
         color: white;
         background-color: black;
+        font-weight: bolder;
         
         
     }
